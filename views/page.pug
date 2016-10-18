@@ -1,0 +1,25 @@
+extends ./layout.pug
+
+block body
+
+  include ./partials/header.pug
+
+  -// Content Section
+  div.container
+
+    -// If there are any slices
+    if pageContent.getSliceZone('page.body') !== null
+      
+      -// Display the slices
+      for slice in pageContent.getSliceZone('page.body').slices
+        case slice.sliceType
+          when 'heading'
+            include ./partials/heading.pug
+          when 'textSection'
+            include ./partials/text-section.pug
+          when 'fullWidthImage'
+            include ./partials/full-width-image.pug
+          when 'highlight'
+            include ./partials/highlight.pug
+          when 'gallery'
+            include ./partials/gallery.pug

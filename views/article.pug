@@ -1,0 +1,45 @@
+extends ./layout.pug
+
+block body
+  div.article.outer-container
+    div.back
+      a(href='./') back to list
+    h1
+      != pageContent.getStructuredText('article.title').asText() || 'Untitled'
+    img.article-image(src=pageContent.getImage('article.image').url, class='star')
+
+    - var sliceZone = pageContent.getSliceZone('article.body') || {}
+    for slice in sliceZone.slices
+      //- Render the right markup for a given slice type.
+      case slice.sliceType
+        when 'text'
+          div.article-section.text
+            div !{slice.value.asHtml()}
+        when 'quote'
+          div.article-section.quote
+            span.block-quotation !{slice.value.asText()}
+        when 'image-with-caption'
+          - var imageWithCaption = slice.value.toArray()[0]
+          - var imageUrl = imageWithCaption.getImage('illustration') ? imageWithCaption.getImage('illustration').url : ''
+          - var caption = imageWithCaption.get('caption')
+          case slice.label
+            when 'image-full-width'
+              div.article-section.image.full-width-image(style='background-image: url(' + imageUrl + ');')
+                div.wrapper
+                  if caption
+                    p
+                      span.image-label !{caption.asText()}
+            when 'emphasized'
+              div.article-section.image.emphasized-image
+                p.block-img.emphasized
+                  img(src=imageUrl)
+                if caption
+                  p
+                    span.image-label !{caption.asText()}
+            default
+              div.article-section.image
+                p.block-img
+                  img(src=imageUrl)
+                if caption
+                  p
+                    span.image-label !{caption.asText()}
