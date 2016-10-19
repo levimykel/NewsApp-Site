@@ -1,30 +1,18 @@
 extends ./layout.pug
 
 block body
-  header.home-header
-    img(src=pageContent.getImage('home.image').url)
-    != pageContent.getStructuredText('home.title').asHtml(ctx.linkResolver)
-    != pageContent.getStructuredText('home.description').asHtml(ctx.linkResolver)
+  include ./partials/header.pug
 
   div.articles.container
+    
+    - var isFeatured = true
     for article in articles
-      a.article-tile(href=ctx.linkResolver(article))
-        div.tile(style="background: url(" + article.getImageView("article.image", "tile").url + ");")
-          div.headline
-            h2
-              != article.getStructuredText('article.title').asText() || 'Untitled'
-          div.text
-            //- display first valid slice text and limit it respecting the end of words.
-            - var firstParagraph = article.getFirstParagraph()
-            - var firstParagraphInPost = firstParagraph ? firstParagraph.text : ''
-            - var textLimit = 300
-            - var limitedText = firstParagraphInPost.substr(0, textLimit)
-            p
-              if firstParagraphInPost.length > textLimit
-                = limitedText.substr(0, limitedText.lastIndexOf(' ')) + '...'
-              else
-                = firstParagraphInPost
-
-            
-            //p
-              != article.getStructuredText('article.description').asText() || 'Untitled'
+      
+      //- Display the most recent article as the featured article
+      if isFeatured
+        include ./partials/featuredArticle.pug
+        - isFeatured = false
+      
+      //- Display the rest of the articles
+      else
+        include ./partials/articleTile.pug

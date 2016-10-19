@@ -12,7 +12,8 @@ function api(req, res) {
   // So we can use this information in the views
   res.locals.ctx = {
     endpoint: configuration.apiEndpoint,
-    linkResolver: configuration.linkResolver
+    linkResolver: configuration.linkResolver,
+    dateConverter: configuration.dateConverter
   };
   return prismic.api(configuration.apiEndpoint, {
     accessToken: configuration.accessToken,
@@ -43,28 +44,34 @@ app.route('/preview').get(function(req, res) {
 app.route('/:uid').get(function(req, res) {
   var uid = req.params.uid;
   api(req, res).then(function(api) {
-    return api.getByUID('article', uid);
-  }).then(function(pageContent) {
-    if(pageContent.uid != uid){
-      return res.redirect("/"+pageContent.uid);
-    }
-    res.render('article', {
-      pageContent: pageContent
+    api.getSingle("home").then(function(layout) {
+      api.getByUID('article', uid).then(function(pageContent) {
+        if(pageContent.uid != uid){
+          return res.redirect("/"+pageContent.uid);
+        }
+        res.render('article', {
+          layout: layout,
+          pageContent: pageContent
+        });
+      }).catch(function(err) {
+        handleError(err, req, res);
+      });
+    }).catch(function(err) {
+      handleError(err, req, res);
     });
   });
 });
 
-
 // Route for homepage
 app.route('/').get(function(req, res) {
   api(req, res).then(function(api) {
-    api.getSingle("home").then(function(pageContent) {
+    api.getSingle("home").then(function(layout) {
       api.query(
         prismic.Predicates.at("document.type", "article"),
         { orderings: '[my.article.date desc]' }
       ).then(function(articles) {
         res.render('homepage', {
-          pageContent: pageContent,
+          layout: layout,
           articles: articles.results
         });
       }).catch(function(err) {

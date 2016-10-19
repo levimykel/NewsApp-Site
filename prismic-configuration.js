@@ -17,5 +17,16 @@ module.exports = {
       return '/' + encodeURIComponent(doc.uid);
     }
     return '/';
+  },  
+  
+  // -- Date Converter
+  // This function converts a Timestamp into a human readable date
+  dateConverter: function(timestamp) {
+    var months = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+    var year = timestamp.getFullYear();
+    var month = months[timestamp.getMonth()];
+    var date = timestamp.getDate();
+    var time = date + ' ' + month + ' ' + year ;
+    return time;
   }
 };

@@ -1,0 +1,21 @@
+div.article-tile
+  div.article-tile-image(style="background-image: url(" + article.getImageView('article.image', 'tile').url + ");")
+  img.article-tile-mobile-image(src=article.getImageView('article.image', 'tile-mobile').url)
+  div.article-tile-content
+    h2
+      != article.getStructuredText('article.title').asText() || 'Untitled'
+    p.meta-info 
+      != article.getText('article.author')
+      span.date  - 
+        != ctx.dateConverter(article.getTimestamp('article.date'))
+    //- display first valid slice text and limit it respecting the end of words.
+    - var firstParagraph = article.getFirstParagraph()
+    - var firstParagraphInPost = firstParagraph ? firstParagraph.text : ''
+    - var textLimit = 300
+    - var limitedText = firstParagraphInPost.substr(0, textLimit)
+    p.description
+      if firstParagraphInPost.length > textLimit
+        = limitedText.substr(0, limitedText.lastIndexOf(' ')) + '...'
+      else
+        = firstParagraphInPost
+    a.button(href=ctx.linkResolver(article)) Read the article

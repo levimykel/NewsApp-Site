@@ -1,0 +1,17 @@
+div.featured-article-container
+  div.featured-article(style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(" + article.getImageView("article.image", "featured").url + ");")
+    div.featured-content
+      h2
+        != article.getStructuredText('article.title').asText() || 'Untitled'
+
+      //- display first valid slice text and limit it respecting the end of words.
+      - var firstParagraph = article.getFirstParagraph()
+      - var firstParagraphInPost = firstParagraph ? firstParagraph.text : ''
+      - var textLimit = 100
+      - var limitedText = firstParagraphInPost.substr(0, textLimit)
+      p.description
+        if firstParagraphInPost.length > textLimit
+          = limitedText.substr(0, limitedText.lastIndexOf(' ')) + '...'
+        else
+          = firstParagraphInPost
+      a.button.featured-button(href=ctx.linkResolver(article)) Read the article

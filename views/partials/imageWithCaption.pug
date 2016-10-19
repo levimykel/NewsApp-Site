@@ -1,0 +1,8 @@
+- var imageWithCaption = slice.value.toArray()[0]
+- var imageUrl = imageWithCaption.getImage('illustration') ? imageWithCaption.getImage('illustration').url : ''
+- var caption = imageWithCaption.get('caption')
+div.article-section.image
+  img(src=imageUrl)
+  if caption
+    p
+      span.image-label !{caption.asText()}
