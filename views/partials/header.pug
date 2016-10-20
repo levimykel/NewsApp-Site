@@ -1,6 +1,6 @@
 header
-    a(href="./")
-      p.logo
-        != layout.getText('home.logo')
-    a.article-link(href=layout.getLink('home.link').url() target="_blank")
-      != layout.getText('home.link-text')
+  a(href="./")
+    p.logo
+      != layout.getText('site-layout.logo')
+  a.article-link(href=layout.getLink('site-layout.link').url() target="_blank")
+    != layout.getText('site-layout.link-text')

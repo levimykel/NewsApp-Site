@@ -44,7 +44,7 @@ app.route('/preview').get(function(req, res) {
 app.route('/:uid').get(function(req, res) {
   var uid = req.params.uid;
   api(req, res).then(function(api) {
-    api.getSingle("home").then(function(layout) {
+    api.getSingle("site-layout").then(function(layout) {
       api.getByUID('article', uid).then(function(pageContent) {
         if(pageContent.uid != uid){
           return res.redirect("/"+pageContent.uid);
@@ -65,7 +65,7 @@ app.route('/:uid').get(function(req, res) {
 // Route for homepage
 app.route('/').get(function(req, res) {
   api(req, res).then(function(api) {
-    api.getSingle("home").then(function(layout) {
+    api.getSingle("site-layout").then(function(layout) {
       api.query(
         prismic.Predicates.at("document.type", "article"),
         { orderings: '[my.article.date desc]' }
