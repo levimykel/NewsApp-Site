@@ -1,0 +1,101 @@
+{
+  "Main" : {
+    "uid" : {
+      "type" : "UID",
+      "fieldset" : "UID & Date",
+      "config" : {
+        "placeholder" : "UID",
+        "label" : "Unique Identifier"
+      }
+    },
+    "date" : {
+      "type" : "Timestamp",
+      "config" : {
+        "label" : "Date & Time"
+      }
+    },
+    "title" : {
+      "type" : "StructuredText",
+      "fieldset" : "Required Fields",
+      "config" : {
+        "single" : "heading1",
+        "placeholder" : "Title..."
+      }
+    },
+    "image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : {
+          "width" : 980
+        },
+        "thumbnails" : [ {
+          "name" : "Tile",
+          "width" : 412,
+          "height" : 412
+        }, {
+          "name" : "Tile-Mobile",
+          "width" : 760,
+          "height" : 200
+        }, {
+          "name" : "Featured",
+          "width" : 980,
+          "height" : 412
+        } ]
+      }
+    },
+    "author" : {
+      "type" : "Select",
+      "config" : {
+        "label" : "Author",
+        "options" : [ "Anthony Aubertin", "Levi Gable", "Sadek Drobi", "Arnaud Lewis", "Guest Author" ]
+      }
+    },
+    "body" : {
+      "fieldset" : "Post content",
+      "type" : "Slices",
+      "config" : {
+        "choices" : {
+          "text" : {
+            "type" : "StructuredText",
+            "fieldset" : "Text",
+            "config" : {
+              "multi" : "paragraph, heading2, heading3, strong, em, hyperlink, ulist, list-item",
+              "placeholder" : "Post text..."
+            }
+          },
+          "quote" : {
+            "type" : "StructuredText",
+            "fieldset" : "Quote",
+            "config" : {
+              "placeholder" : "Post quote...",
+              "single" : "paragraph"
+            }
+          },
+          "image-with-caption" : {
+            "type" : "Group",
+            "fieldset" : "Post image and caption",
+            "config" : {
+              "fields" : {
+                "illustration" : {
+                  "type" : "Image",
+                  "config" : {
+                    "constraint" : {
+                      "width" : 980
+                    }
+                  }
+                },
+                "caption" : {
+                  "type" : "StructuredText",
+                  "config" : {
+                    "single" : "heading3",
+                    "placeholder" : "Image caption..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

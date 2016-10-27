@@ -1,0 +1,35 @@
+{
+  "Main" : {
+    "title" : {
+      "type" : "StructuredText",
+      "fieldset" : "Page Title For Backend",
+      "config" : {
+        "single" : "heading1",
+        "placeholder" : "Title..."
+      }
+    },
+    "logo" : {
+      "type" : "Text",
+      "fieldset" : "Logo Text",
+      "config" : {
+        "label" : "Logo Text",
+        "placeholder" : "Title..."
+      }
+    },
+    "link-text" : {
+      "type" : "Text",
+      "fieldset" : "Link",
+      "config" : {
+        "label" : "Link Text",
+        "placeholder" : "Link Text..."
+      }
+    },
+    "link" : {
+      "type" : "Link",
+      "config" : {
+        "select" : "web",
+        "placeholder" : "Link to the web"
+      }
+    }
+  }
+}
